@@ -1,0 +1,592 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Jaime Aparicio Halpern</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Portfolio de ingeniería biomédica y neurotecnología de Jaime Aparicio Halpern.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<script>
+  (function () {
+    var l = null;
+    try { l = localStorage.getItem('lang'); } catch (e) {}
+    if (!l) l = (navigator.language || 'es').toLowerCase().indexOf('es') === 0 ? 'es' : 'en';
+    document.documentElement.setAttribute('data-lang', l);
+    document.documentElement.lang = l;
+  })();
+</script>
+<style>
+  /* Layout: lab-notebook grid. A narrow metadata column (dates, institution, units) sits left of the content column on wide screens and folds above it on phones. One live signal trace in the hero is the only flourish. */
+  :root {
+    --bg: #f4f6f9;
+    --surface: #ffffff;
+    --ink: #13202c;
+    --muted: #586676;
+    --line: #d9e0e8;
+    --accent: #2146c7;
+    --accent-soft: #e4eafc;
+    --signal: #d9483a;
+    --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+    --body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+    --step--1: 0.8125rem;
+    --step-0: 1rem;
+    --step-1: 1.25rem;
+    --step-2: 1.75rem;
+    --step-3: clamp(2rem, 4.5vw, 3rem);
+    --step-4: clamp(2.6rem, 7.5vw, 5.25rem);
+    --wrap: 72rem;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0d131a; --surface: #141c25; --ink: #e5eaf0; --muted: #94a2b1;
+      --line: #263240; --accent: #86a5ff; --accent-soft: #1b2744; --signal: #ff7b6b;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0d131a; --surface: #141c25; --ink: #e5eaf0; --muted: #94a2b1;
+    --line: #263240; --accent: #86a5ff; --accent-soft: #1b2744; --signal: #ff7b6b;
+    color-scheme: dark;
+  }
+
+  :root:not([data-lang="en"]) [data-l="en"],
+  :root[data-lang="en"] [data-l="es"] { display: none !important; }
+
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+  img { max-width: 100%; }
+  [hidden] { display: none !important; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font: 400 var(--step-0)/1.6 var(--body);
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+  h1, h2, h3 { font-family: var(--display); text-wrap: balance; margin: 0; line-height: 1.05; }
+  p { margin: 0; }
+
+  .wrap {
+    max-width: var(--wrap);
+    margin-inline: auto;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+  .label {
+    font: 500 var(--step--1)/1.4 var(--mono);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* Top bar */
+  .bar {
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+    z-index: 10;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .bar .wrap {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding-block: 12px;
+  }
+  .bar nav { display: flex; gap: clamp(12px, 3vw, 28px); flex-wrap: wrap; }
+  .bar nav a { color: var(--ink); text-decoration: none; font-size: var(--step--1); font-weight: 500; }
+  .bar nav a:hover { color: var(--accent); }
+  .mark { font: 800 1.05rem/1 var(--display); color: var(--ink); text-decoration: none; letter-spacing: -0.01em; }
+  .lang {
+    display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 2px; background: var(--surface);
+  }
+  .lang button {
+    font: 500 0.75rem/1 var(--mono); letter-spacing: 0.06em; border: 0; background: none; color: var(--muted);
+    padding: 6px 10px; border-radius: 999px; cursor: pointer;
+  }
+  .lang button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+  @media (max-width: 560px) { .bar nav { display: none; } }
+
+  /* Hero */
+  .hero { padding-block: clamp(48px, 9vw, 104px) 0; }
+  .hero .label { margin-bottom: 20px; }
+  .hero h1 {
+    font-size: var(--step-4); font-weight: 800; letter-spacing: -0.035em; line-height: 0.95;
+  }
+  .hero h1 span.thin { font-weight: 400; color: var(--muted); }
+  .hero .lede {
+    margin-top: 28px; max-width: 40rem; font-size: var(--step-1); line-height: 1.5; color: var(--ink);
+  }
+  .hero .lede em { font-style: normal; color: var(--accent); font-weight: 500; }
+  .hero-links { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 6px;
+    font: 500 0.9375rem/1 var(--body); text-decoration: none; border: 1px solid var(--line);
+    color: var(--ink); background: var(--surface); cursor: pointer;
+  }
+  .btn.primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .btn:hover { border-color: var(--accent); }
+  .trace-box { margin-top: clamp(40px, 7vw, 72px); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); position: relative; }
+  .trace-box canvas { display: block; width: 100%; height: 120px; }
+  .trace-meta {
+    position: absolute; left: 0; top: 10px; display: flex; gap: 20px;
+    font: 400 0.75rem/1 var(--mono); color: var(--muted);
+  }
+  .trace-meta b { color: var(--signal); font-weight: 500; }
+
+  /* Sections */
+  section.block { padding-block: clamp(56px, 9vw, 104px); }
+  .sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: clamp(32px, 5vw, 56px); }
+  .sec-head h2 { font-size: var(--step-3); font-weight: 800; letter-spacing: -0.03em; }
+
+  /* Project */
+  .project {
+    display: grid; grid-template-columns: 13rem minmax(0, 1fr); gap: 16px clamp(24px, 4vw, 56px);
+    padding-block: clamp(40px, 6vw, 64px); border-top: 1px solid var(--line);
+  }
+  .project:first-of-type { border-top: 0; padding-top: 0; }
+  .meta { display: flex; flex-direction: column; gap: 14px; }
+  .meta dl { margin: 0; display: grid; gap: 12px; }
+  .meta dt { font: 500 0.6875rem/1.3 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  .meta dd { margin: 2px 0 0; font-size: var(--step--1); line-height: 1.45; }
+  .tag {
+    align-self: flex-start; font: 500 0.6875rem/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 6px 8px; border-radius: 4px; background: var(--accent-soft); color: var(--accent);
+  }
+  .p-body { min-width: 0; display: grid; gap: 28px; }
+  .p-body h3 { font-size: var(--step-2); font-weight: 600; letter-spacing: -0.02em; line-height: 1.12; max-width: 36ch; }
+  .p-body .summary { max-width: 62ch; color: var(--ink); }
+
+  .player { display: grid; gap: 10px; }
+  .screen {
+    position: relative; background: #05080b; border-radius: 8px; overflow: hidden; aspect-ratio: 16 / 9; max-width: 100%;
+  }
+  .screen video { width: 100%; height: 100%; display: block; object-fit: contain; background: #05080b; }
+  .tabs { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .tabs button {
+    font: 500 0.8125rem/1 var(--body); padding: 8px 12px; border-radius: 999px; cursor: pointer;
+    border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+  }
+  .tabs button[aria-selected="true"] { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+  .tabs .cap { margin-left: auto; font-size: var(--step--1); color: var(--muted); }
+
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr)); border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+  .stat { padding: 16px 18px; border-left: 1px solid var(--line); display: grid; gap: 4px; align-content: start; }
+  .stat:first-child { border-left: 0; }
+  .stat .v { font: 600 var(--step-2)/1 var(--display); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+  .stat .v small { font: 400 0.875rem/1 var(--mono); color: var(--muted); margin-left: 2px; }
+  .stat .k { font-size: var(--step--1); color: var(--muted); line-height: 1.4; }
+  @media (max-width: 640px) {
+    .stats { grid-template-columns: 1fr 1fr; }
+    .stat { border-left: 0; border-top: 1px solid var(--line); }
+    .stat:nth-child(odd) { border-right: 1px solid var(--line); }
+    .stat:nth-child(-n+2) { border-top: 0; }
+  }
+
+  .cols { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 28px; }
+  .cols h4 { margin: 0 0 10px; }
+  ul.did { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; max-width: 62ch; }
+  ul.did li { position: relative; padding-left: 22px; }
+  ul.did li::before { content: ""; position: absolute; left: 0; top: 0.72em; width: 12px; height: 1.5px; background: var(--signal); }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; align-content: start; }
+  .chips > span {
+    font: 400 0.8125rem/1 var(--mono); padding: 7px 9px; border: 1px solid var(--line); border-radius: 4px; color: var(--ink); background: var(--surface);
+  }
+  .doc-link { font-size: var(--step--1); }
+
+  @media (max-width: 860px) {
+    .project { grid-template-columns: minmax(0, 1fr); }
+    .meta dl { grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); }
+    .cols { grid-template-columns: minmax(0, 1fr); }
+  }
+
+  /* About */
+  .about { background: var(--surface); border-block: 1px solid var(--line); }
+  .about-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(32px, 6vw, 80px); }
+  .about-intro p { max-width: 52ch; }
+  .about-intro p + p { margin-top: 14px; }
+  .timeline { display: grid; gap: 0; }
+  .timeline h4 { margin: 0 0 4px; }
+  .group + .group { margin-top: 36px; }
+  .item { display: grid; grid-template-columns: 8.5rem minmax(0, 1fr); gap: 4px 16px; padding-block: 14px; border-top: 1px solid var(--line); }
+  .item .when { font: 400 var(--step--1)/1.5 var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+  .item b { display: block; font-weight: 600; }
+  .item .where { color: var(--muted); font-size: var(--step--1); }
+  .item p { font-size: 0.9375rem; margin-top: 4px; }
+  @media (max-width: 860px) { .about-grid { grid-template-columns: minmax(0, 1fr); } }
+  @media (max-width: 480px) { .item { grid-template-columns: minmax(0, 1fr); } }
+
+  .skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 24px 40px; margin-top: clamp(40px, 6vw, 64px); }
+  .skills h4 { margin: 0 0 10px; }
+
+  /* Contact */
+  .contact h2 { font-size: var(--step-3); font-weight: 800; letter-spacing: -0.03em; max-width: 18ch; }
+  .contact p.lead { margin-top: 16px; max-width: 52ch; color: var(--muted); }
+  .contact-row + .contact-row { margin-top: 12px; }
+  .contact-row { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .email { font: 500 var(--step-1)/1.2 var(--mono); user-select: all; word-break: break-all; }
+  footer { border-top: 1px solid var(--line); }
+  footer .wrap { padding-block: 24px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; color: var(--muted); font-size: var(--step--1); }
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="mark" href="#top">J. Aparicio Halpern</a>
+    <nav aria-label="Secciones">
+      <a href="#proyectos"><span data-l="es">Proyectos</span><span data-l="en">Projects</span></a>
+      <a href="#sobre-mi"><span data-l="es">Trayectoria</span><span data-l="en">Background</span></a>
+      <a href="#contacto"><span data-l="es">Contacto</span><span data-l="en">Contact</span></a>
+    </nav>
+    <div class="lang" role="group" aria-label="Idioma / Language">
+      <button type="button" id="lang-es" data-set="es">ES</button>
+      <button type="button" id="lang-en" data-set="en">EN</button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <p class="label"><span data-l="es">Ingeniería biomédica · Neurotecnología · Madrid</span><span data-l="en">Biomedical engineering · Neurotechnology · Madrid</span></p>
+      <h1>Jaime Aparicio<br><span class="thin">Halpern</span></h1>
+      <p class="lede">
+        <span data-l="es">Ingeniero biomédico especializado en <em>neurotecnología</em>. Diseño sistemas que conectan sensores, aprendizaje automático y personas: manos robóticas que devuelven sensación, juegos de realidad virtual para rehabilitación y exoesqueletos impresos en 3D.</span>
+        <span data-l="en">Biomedical engineer specialised in <em>neurotechnology</em>. I build systems that connect sensors, machine learning and people: robotic hands that return sensation, virtual reality games for rehabilitation and 3D-printed exoskeletons.</span>
+      </p>
+      <div class="hero-links">
+        <a class="btn primary" href="#proyectos"><span data-l="es">Ver proyectos</span><span data-l="en">See projects</span> ↓</a>
+        <a class="btn" href="https://www.linkedin.com/in/jaime-aparicio-halpern-5aa029316/" target="_blank" rel="noopener">LinkedIn ↗</a>
+        <a class="btn" href="https://github.com/jaimeapa" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+    </div>
+    <div class="wrap">
+      <div class="trace-box" aria-hidden="true">
+        <canvas id="trace"></canvas>
+        <div class="trace-meta"><span><b>●</b> EMG</span><span>1 kHz</span><span>±1 mV</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="proyectos">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2><span data-l="es">Proyectos</span><span data-l="en">Projects</span></h2>
+        <p class="label"><span data-l="es">3 proyectos · 2024–2026</span><span data-l="en">3 projects · 2024–2026</span></p>
+      </div>
+
+      <!-- TFM -->
+      <article class="project" id="tfm">
+        <aside class="meta">
+          <span class="tag"><span data-l="es">Trabajo Fin de Máster</span><span data-l="en">Master's thesis</span></span>
+          <dl>
+            <div><dt><span data-l="es">Fecha</span><span data-l="en">Date</span></dt><dd>02/2026 – 07/2026</dd></div>
+            <div><dt><span data-l="es">Centro</span><span data-l="en">Institution</span></dt><dd>Universidad Politécnica de Madrid</dd></div>
+            <div><dt><span data-l="es">Área</span><span data-l="en">Field</span></dt><dd><span data-l="es">Neuroprótesis · Retroalimentación sensorial</span><span data-l="en">Neuroprosthetics · Sensory feedback</span></dd></div>
+          </dl>
+        </aside>
+        <div class="p-body">
+          <h3><span data-l="es">Sistema de estimulación neural para percibir la forma de los objetos con una mano robótica</span><span data-l="en">A neural stimulation system for shape perception in a robotic hand</span></h3>
+          <p class="summary">
+            <span data-l="es">Las prótesis de mano actuales casi no devuelven información táctil, así que el usuario tiene que mirar constantemente lo que agarra. Construí un sistema en lazo cerrado: el usuario activa el agarre con EMG, una mano robótica de tres dedos impresa en 3D sujeta el objeto, un modelo de machine learning reconoce su forma a partir de los servomotores y un estimulador eléctrico no invasivo le transmite esa forma como un patrón de sensaciones.</span>
+            <span data-l="en">Today's prosthetic hands return almost no touch information, so users must keep watching what they grasp. I built a closed-loop system: the user triggers the grasp with EMG, a 3D-printed three-finger robotic hand holds the object, a machine learning model recognises its shape from the servomotor data, and a non-invasive electrical stimulator delivers that shape back as a pattern of sensations.</span>
+          </p>
+          <div class="player" data-player>
+            <div class="screen"><video controls muted playsinline preload="metadata"></video></div>
+            <div class="tabs" role="tablist">
+              <button type="button" role="tab" data-src="hand-cube.mp4"><span data-l="es">Cubo</span><span data-l="en">Cube</span></button>
+              <button type="button" role="tab" data-src="hand-sphere.mp4"><span data-l="es">Esfera</span><span data-l="en">Sphere</span></button>
+              <button type="button" role="tab" data-src="hand-cylinder.mp4"><span data-l="es">Cilindro</span><span data-l="en">Cylinder</span></button>
+              <span class="cap"><span data-l="es">Agarre y clasificación en tiempo real</span><span data-l="en">Real-time grasp and classification</span></span>
+            </div>
+          </div>
+          <div class="stats">
+            <div class="stat"><span class="v">95.61<small>%</small></span><span class="k"><span data-l="es">Precisión en test (Gradient Boosting)</span><span data-l="en">Test accuracy (Gradient Boosting)</span></span></div>
+            <div class="stat"><span class="v">0.958</span><span class="k"><span data-l="es">F1 macro</span><span data-l="en">Macro F1-score</span></span></div>
+            <div class="stat"><span class="v">91.67<small>%</small></span><span class="k"><span data-l="es">Acierto en lazo cerrado con 7 participantes</span><span data-l="en">Closed-loop accuracy with 7 participants</span></span></div>
+            <div class="stat"><span class="v">4.85<small>/5</small></span><span class="k"><span data-l="es">Satisfacción en el cuestionario de usabilidad</span><span data-l="en">Usability questionnaire satisfaction</span></span></div>
+          </div>
+          <div class="cols">
+            <div>
+              <h4 class="label"><span data-l="es">Qué hice</span><span data-l="en">What I did</span></h4>
+              <ul class="did">
+                <li><span data-l="es">Integré mano robótica, EMG, clasificador y estimulador (EAST) en un único flujo en tiempo real.</span><span data-l="en">Integrated the robotic hand, EMG, classifier and stimulator (EAST) into one real-time workflow.</span></li>
+                <li><span data-l="es">Extraje características de posición y carga de los servomotores durante el agarre y comparé estrategias de clasificación (de 80.0 % con un solo agarre a 95.61 % con el modelo final).</span><span data-l="en">Extracted position and load features from the servomotors during the grasp and compared classification strategies (from 80.0% with a single grasp to 95.61% with the final model).</span></li>
+                <li><span data-l="es">Diseñé un patrón de estimulación para cada forma: los participantes identificaron el 100 % de los patrones recibidos.</span><span data-l="en">Designed one stimulation pattern per shape: participants identified 100% of the patterns they received.</span></li>
+                <li><span data-l="es">Validé el sistema con 7 sujetos y un cuestionario de usabilidad.</span><span data-l="en">Validated the system with 7 subjects and a usability questionnaire.</span></li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="label"><span data-l="es">Herramientas</span><span data-l="en">Tools</span></h4>
+              <div class="chips"><span>Python</span><span>scikit-learn</span><span>Gradient Boosting</span><span>EMG</span><span><span data-l="es">Neuroestimulación</span><span data-l="en">Neurostimulation</span></span><span><span data-l="es">Impresión 3D</span><span data-l="en">3D printing</span></span><span><span data-l="es">Servomotores</span><span data-l="en">Servomotors</span></span></div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- TFG -->
+      <article class="project" id="tfg">
+        <aside class="meta">
+          <span class="tag"><span data-l="es">Trabajo Fin de Grado</span><span data-l="en">Bachelor's thesis</span></span>
+          <dl>
+            <div><dt><span data-l="es">Fecha</span><span data-l="en">Date</span></dt><dd>09/2024 – 07/2025</dd></div>
+            <div><dt><span data-l="es">Centro</span><span data-l="en">Institution</span></dt><dd>Universidad CEU San Pablo</dd></div>
+            <div><dt><span data-l="es">Área</span><span data-l="en">Field</span></dt><dd><span data-l="es">Realidad virtual · Rehabilitación</span><span data-l="en">Virtual reality · Rehabilitation</span></dd></div>
+          </dl>
+        </aside>
+        <div class="p-body">
+          <h3><span data-l="es">Laberinto en realidad virtual controlado con el cuello para rehabilitación</span><span data-l="en">A neck-controlled virtual reality maze game for rehabilitation</span></h3>
+          <p class="summary">
+            <span data-l="es">Los ejercicios para el dolor cervical crónico son repetitivos y muchos pacientes los abandonan. Llevé la terapia del laberinto a la realidad virtual: el paciente guía una bola por el laberinto moviendo la cabeza, de modo que cada partida es un ejercicio de movilidad cervical. Lo diseñé junto a fisioterapeutas, que pidieron laberintos ajustables, límites de tiempo y de choques, y un modo con un enemigo que recorre el laberinto.</span>
+            <span data-l="en">Exercises for chronic neck pain are repetitive, and many patients drop them. I brought maze therapy into virtual reality: the patient guides the player through the maze by moving their head, so every game is a cervical mobility exercise. I designed it with physiotherapists, who asked for adjustable mazes, time and wall-hit limits, and a mode with an enemy that roams the maze.</span>
+          </p>
+          <div class="player" data-player>
+            <div class="screen"><video controls muted playsinline preload="metadata"></video></div>
+            <div class="tabs" role="tablist">
+              <button type="button" role="tab" data-src="vr-gameplay.mp4"><span data-l="es">Partida</span><span data-l="en">Gameplay</span></button>
+              <button type="button" role="tab" data-src="vr-ui.mp4"><span data-l="es">Interfaz completa</span><span data-l="en">Full interface</span></button>
+              <span class="cap">Meta Quest</span>
+            </div>
+          </div>
+          <div class="stats">
+            <div class="stat"><span class="v">8.35<small>/10</small></span><span class="k"><span data-l="es">Usabilidad (SUS)</span><span data-l="en">Usability (SUS)</span></span></div>
+            <div class="stat"><span class="v">9.95<small>/10</small></span><span class="k"><span data-l="es">Ausencia de mareo (SSQ)</span><span data-l="en">Freedom from sickness (SSQ)</span></span></div>
+            <div class="stat"><span class="v">6.75<small>/10</small></span><span class="k"><span data-l="es">Sensación de presencia (PQ)</span><span data-l="en">Sense of presence (PQ)</span></span></div>
+            <div class="stat"><span class="v">4</span><span class="k"><span data-l="es">Fisioterapeutas evaluaron el juego</span><span data-l="en">Physiotherapists evaluated the game</span></span></div>
+          </div>
+          <div class="cols">
+            <div>
+              <h4 class="label"><span data-l="es">Qué hice</span><span data-l="en">What I did</span></h4>
+              <ul class="did">
+                <li><span data-l="es">Programé la generación procedural de laberintos por celdas, con tamaños configurables y direcciones ponderadas para laberintos verticales.</span><span data-l="en">Programmed cell-based procedural maze generation, with configurable sizes and weighted directions for vertical mazes.</span></li>
+                <li><span data-l="es">Implementé el control con la cabeza mediante una retícula por raycast que atrae al jugador hacia donde mira el paciente.</span><span data-l="en">Implemented head control through a raycast reticle that pulls the player towards where the patient looks.</span></li>
+                <li><span data-l="es">Añadí guardado y reproducción de laberintos, límites de tiempo y choques y un modo con enemigo.</span><span data-l="en">Added maze saving and replay, time and wall-hit limits, and an enemy mode.</span></li>
+                <li><span data-l="es">Evalué el juego con cuatro cuestionarios estándar: PQ, SSQ, NASA-TLX y SUS.</span><span data-l="en">Evaluated the game with four standard questionnaires: PQ, SSQ, NASA-TLX and SUS.</span></li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="label"><span data-l="es">Herramientas</span><span data-l="en">Tools</span></h4>
+              <div class="chips"><span>Unity 2022.3</span><span>C#</span><span>XR Interaction Toolkit</span><span>Meta Quest</span></div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- POWERUP -->
+      <article class="project" id="powerup">
+        <aside class="meta">
+          <span class="tag"><span data-l="es">Proyecto · Artículo</span><span data-l="en">Project · Paper</span></span>
+          <dl>
+            <div><dt><span data-l="es">Fecha</span><span data-l="en">Date</span></dt><dd>2024</dd></div>
+            <div><dt><span data-l="es">Centro</span><span data-l="en">Institution</span></dt><dd>Universidad CEU San Pablo</dd></div>
+            <div><dt><span data-l="es">Área</span><span data-l="en">Field</span></dt><dd><span data-l="es">Exoesqueletos · Diseño 3D</span><span data-l="en">Exoskeletons · 3D design</span></dd></div>
+          </dl>
+        </aside>
+        <div class="p-body">
+          <h3><span data-l="es">Rediseño 3D de la pronosupinación del exoesqueleto POWERUP</span><span data-l="en">3D redesign of the POWERUP exoskeleton's pronosupination</span></h3>
+          <p class="summary">
+            <span data-l="es">POWERUP es un exoesqueleto pasivo de miembro superior, de código abierto e impreso en 3D, para niños de 6 a 14 años con parálisis cerebral. En las pruebas clínicas, el mecanismo de giro del antebrazo resultaba voluminoso, difícil de ajustar y tapaba los marcadores de captura de movimiento. Diseñé tres prototipos más pequeños para sustituirlo.</span>
+            <span data-l="en">POWERUP is a passive, open-source, 3D-printed upper-limb exoskeleton for children aged 6 to 14 with cerebral palsy. In clinical trials its forearm rotation mechanism proved bulky, hard to fit and blocked motion-capture markers. I designed three smaller prototypes to replace it.</span>
+          </p>
+          <div class="player" data-player>
+            <div class="screen"><video controls muted playsinline preload="metadata"></video></div>
+            <div class="tabs" role="tablist">
+              <button type="button" role="tab" data-src="powerup-1.mp4"><span data-l="es">Diseño 1</span><span data-l="en">Design 1</span></button>
+              <button type="button" role="tab" data-src="powerup-2.mp4"><span data-l="es">Diseño 2</span><span data-l="en">Design 2</span></button>
+              <button type="button" role="tab" data-src="powerup-3.mp4"><span data-l="es">Diseño 3</span><span data-l="en">Design 3</span></button>
+              <span class="cap">Autodesk Inventor</span>
+            </div>
+          </div>
+          <div class="cols">
+            <div>
+              <h4 class="label"><span data-l="es">Qué hice</span><span data-l="en">What I did</span></h4>
+              <ul class="did">
+                <li><span data-l="es">Diseñé tres prototipos: un semicírculo extensible y dos mecanismos de cilindro y esfera, con uno y dos anclajes.</span><span data-l="en">Designed three prototypes: an extendable semicircle and two cylinder-and-sphere mechanisms, with one and two anchors.</span></li>
+                <li><span data-l="es">Imprimí y probé las piezas, y ajusté la proporción entre esfera y cilindro hasta que soportaron el peso del brazo sin romperse.</span><span data-l="en">Printed and tested the parts, and tuned the sphere-to-cylinder ratio until they held the weight of the arm without breaking.</span></li>
+                <li><span data-l="es">Rediseñé la pieza de soporte para ocupar menos espacio y fijarla con tornillo y tuerca.</span><span data-l="en">Redesigned the support part to take up less space and fasten with a bolt and nut.</span></li>
+                <li><span data-l="es">Concluí que el mecanismo de cilindro y esfera funcionaría mejor en el codo, donde ocurre anatómicamente el giro del antebrazo.</span><span data-l="en">Concluded that the cylinder-and-sphere mechanism would work best at the elbow, where forearm rotation happens anatomically.</span></li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="label"><span data-l="es">Herramientas</span><span data-l="en">Tools</span></h4>
+              <div class="chips"><span>Autodesk Inventor</span><span><span data-l="es">Impresión 3D</span><span data-l="en">3D printing</span></span><span><span data-l="es">Prototipado</span><span data-l="en">Prototyping</span></span></div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="block about" id="sobre-mi">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2><span data-l="es">Trayectoria</span><span data-l="en">Background</span></h2>
+      </div>
+      <div class="about-grid">
+        <div class="about-intro">
+          <p><span data-l="es">Me interesa llevar la tecnología sanitaria del laboratorio a la clínica: implantar, optimizar y asesorar sobre sistemas de salud digital en entornos clínicos.</span><span data-l="en">I want to take health technology from the lab into the clinic: implementing, optimising and advising on digital health systems in clinical settings.</span></p>
+          <p><span data-l="es">Tengo experiencia en programación, procesamiento de señales e integración de dispositivos médicos, y he trabajado en una startup de Boston. Soy organizado, proactivo y con muchas ganas de aprender.</span><span data-l="en">I have experience in programming, signal processing and medical device integration, and I have worked at a Boston startup. I am organised, proactive and eager to learn.</span></p>
+        </div>
+        <div class="timeline">
+          <div class="group">
+            <h4 class="label"><span data-l="es">Experiencia</span><span data-l="en">Experience</span></h4>
+            <div class="item">
+              <span class="when">02/2026 – 05/2026</span>
+              <div><b><span data-l="es">Prácticas · Robolabo</span><span data-l="en">Intern · Robolabo</span></b><span class="where">Madrid</span>
+                <p><span data-l="es">Experimentos de neuroestimulación con el exoesqueleto Technaid H3 y sistemas basados en ROS2.</span><span data-l="en">Neurostimulation experiments with the Technaid H3 exoskeleton and ROS2-based systems.</span></p></div>
+            </div>
+            <div class="item">
+              <span class="when">05/2025 – 08/2025</span>
+              <div><b><span data-l="es">Prácticas · BioSens8</span><span data-l="en">Intern · BioSens8</span></b><span class="where">Boston, MA</span>
+                <p><span data-l="es">Desarrollo de producto, web y tareas de mercado para un sistema de monitorización hormonal continua en el mercado sanitario de EE. UU.</span><span data-l="en">Product development, web implementation and market tasks for a continuous hormone monitoring product in the US healthcare market.</span></p></div>
+            </div>
+          </div>
+          <div class="group">
+            <h4 class="label"><span data-l="es">Formación</span><span data-l="en">Education</span></h4>
+            <div class="item">
+              <span class="when">09/2025 – 07/2026</span>
+              <div><b><span data-l="es">Máster en Neurotecnología</span><span data-l="en">MSc in Neurotechnology</span></b><span class="where">Universidad Politécnica de Madrid</span>
+                <p><span data-l="es">Neuroimagen, neuroseñales, neuroprótesis e IA.</span><span data-l="en">Neuroimaging, neurosignals, neuroprosthetics and AI.</span></p></div>
+            </div>
+            <div class="item">
+              <span class="when">01/2025 – 08/2025</span>
+              <div><b>Advanced Graduate Certificate in Business of Biotechnology</b><span class="where">Boston University</span>
+                <p><span data-l="es">Economía internacional, comercio electrónico, marketing y negocio de la ingeniería biomédica.</span><span data-l="en">International economics, e-commerce, marketing and the business of biomedical engineering.</span></p></div>
+            </div>
+            <div class="item">
+              <span class="when">09/2021 – 06/2025</span>
+              <div><b><span data-l="es">Grado en Ingeniería Biomédica</span><span data-l="en">BSc in Biomedical Engineering</span></b><span class="where">Universidad CEU San Pablo</span>
+                <p><span data-l="es">Programación, robótica, estadística y tratamiento de señales.</span><span data-l="en">Programming, robotics, statistics and signal processing.</span></p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="skills">
+        <div><h4 class="label">IA &amp; <span data-l="es">datos</span><span data-l="en">data</span></h4><div class="chips"><span>Python</span><span>MATLAB</span><span>scikit-learn</span><span>Machine Learning</span><span><span data-l="es">Procesamiento de señales</span><span data-l="en">Signal processing</span></span></div></div>
+        <div><h4 class="label">XR &amp; 3D</h4><div class="chips"><span>Unity</span><span>XR Interaction Toolkit</span><span>Meta Quest</span><span>Autodesk Inventor</span><span><span data-l="es">Impresión 3D</span><span data-l="en">3D printing</span></span></div></div>
+        <div><h4 class="label"><span data-l="es">Tecnología clínica</span><span data-l="en">Clinical technology</span></h4><div class="chips"><span><span data-l="es">Neuroimagen</span><span data-l="en">Neuroimaging</span></span><span><span data-l="es">Salud digital</span><span data-l="en">Digital health</span></span><span><span data-l="es">Integración de dispositivos médicos</span><span data-l="en">Medical device integration</span></span><span><span data-l="es">Imagen médica</span><span data-l="en">Medical imaging</span></span></div></div>
+        <div><h4 class="label"><span data-l="es">Sistemas</span><span data-l="en">Systems</span></h4><div class="chips"><span>ROS2</span><span>Arduino</span><span>Git</span><span><span data-l="es">Integración hardware-software</span><span data-l="en">Hardware-software integration</span></span><span><span data-l="es">Pruebas y validación</span><span data-l="en">Testing &amp; validation</span></span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block contact" id="contacto">
+    <div class="wrap">
+      <h2><span data-l="es">¿Hablamos?</span><span data-l="en">Let's talk</span></h2>
+      <p class="lead"><span data-l="es">Busco oportunidades en neurotecnología, salud digital y desarrollo de dispositivos médicos.</span><span data-l="en">I'm looking for opportunities in neurotechnology, digital health and medical device development.</span></p>
+      <div class="contact-row">
+        <span class="email" id="email">japariciohalpern@gmail.com</span>
+        <button class="btn" type="button" id="copy"><span data-l="es">Copiar email</span><span data-l="en">Copy email</span></button>
+      </div>
+      <div class="contact-row">
+        <span class="email" id="phone">+34 628 922 377</span>
+        <button class="btn" type="button" id="copy-phone"><span data-l="es">Copiar teléfono</span><span data-l="en">Copy phone</span></button>
+      </div>
+      <div class="contact-row">
+        <a class="btn primary" href="https://www.linkedin.com/in/jaime-aparicio-halpern-5aa029316/" target="_blank" rel="noopener">LinkedIn ↗</a>
+        <a class="btn" href="https://github.com/jaimeapa" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Jaime Aparicio Halpern</span>
+    <span>Madrid</span>
+  </div>
+</footer>
+
+<script>
+  // Language toggle
+  function setLang(l) {
+    document.documentElement.setAttribute('data-lang', l);
+    document.documentElement.lang = l;
+    document.querySelectorAll('.lang button').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.set === l); });
+    try { localStorage.setItem('lang', l); } catch (e) {}
+  }
+  document.querySelectorAll('.lang button').forEach(function (b) { b.addEventListener('click', function () { setLang(b.dataset.set); }); });
+  setLang(document.documentElement.getAttribute('data-lang') || 'es');
+
+  // Video players: one video element per project, tabs swap the source
+  document.querySelectorAll('[data-player]').forEach(function (p) {
+    var v = p.querySelector('video');
+    var tabs = p.querySelectorAll('[role="tab"]');
+    function pick(t, play) {
+      tabs.forEach(function (x) { x.setAttribute('aria-selected', x === t); });
+      v.src = t.dataset.src;
+      if (play) v.play().catch(function () {});
+    }
+    tabs.forEach(function (t) { t.addEventListener('click', function () { pick(t, true); }); });
+    pick(tabs[0], false);
+  });
+
+  // Copy email / phone
+  function copyButton(btnId, srcId) {
+    var btn = document.getElementById(btnId), src = document.getElementById(srcId);
+    var es = btn.querySelector('[data-l="es"]'), en = btn.querySelector('[data-l="en"]');
+    var esText = es.textContent, enText = en.textContent;
+    btn.addEventListener('click', function () {
+      var done = function () {
+        es.textContent = 'Copiado'; en.textContent = 'Copied';
+        setTimeout(function () { es.textContent = esText; en.textContent = enText; }, 1800);
+      };
+      var select = function () { var r = document.createRange(); r.selectNodeContents(src); var s = getSelection(); s.removeAllRanges(); s.addRange(r); };
+      if (navigator.clipboard) navigator.clipboard.writeText(src.textContent.replace(/\s/g, '')).then(done, select); else select();
+    });
+  }
+  copyButton('copy', 'email');
+  copyButton('copy-phone', 'phone');
+
+  // Hero signal trace: a synthetic EMG-like burst pattern scrolling right to left
+  (function () {
+    var c = document.getElementById('trace'), ctx = c.getContext('2d');
+    var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var w, h, dpr, data = [], t = 0;
+    function color() { return getComputedStyle(document.documentElement).getPropertyValue('--signal').trim() || '#d9483a'; }
+    function grid() { return getComputedStyle(document.documentElement).getPropertyValue('--line').trim() || '#d9e0e8'; }
+    function sample(i) {
+      var burst = Math.max(0, Math.sin(i / 70)) ** 6;
+      return (Math.random() - 0.5) * (0.08 + burst * 0.9) + Math.sin(i / 3) * 0.02;
+    }
+    function size() {
+      dpr = window.devicePixelRatio || 1;
+      w = c.clientWidth; h = c.clientHeight;
+      c.width = w * dpr; c.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      var n = Math.ceil(w / 2) + 2;
+      while (data.length < n) data.push(sample(t++));
+      data = data.slice(-n);
+    }
+    function draw() {
+      ctx.clearRect(0, 0, w, h);
+      ctx.strokeStyle = grid(); ctx.lineWidth = 1;
+      for (var x = 0; x < w; x += 40) { ctx.beginPath(); ctx.moveTo(x + 0.5, 0); ctx.lineTo(x + 0.5, h); ctx.stroke(); }
+      ctx.beginPath(); ctx.moveTo(0, h / 2 + 0.5); ctx.lineTo(w, h / 2 + 0.5); ctx.stroke();
+      ctx.strokeStyle = color(); ctx.lineWidth = 1.4; ctx.beginPath();
+      for (var i = 0; i < data.length; i++) {
+        var y = h / 2 - data[i] * h * 0.55;
+        if (i === 0) ctx.moveTo(i * 2, y); else ctx.lineTo(i * 2, y);
+      }
+      ctx.stroke();
+    }
+    function tick() {
+      data.shift(); data.push(sample(t++));
+      draw();
+      requestAnimationFrame(tick);
+    }
+    size(); draw();
+    addEventListener('resize', function () { size(); draw(); });
+    if (!reduce) requestAnimationFrame(tick);
+  })();
+</script>
+
+</body>
+</html>
